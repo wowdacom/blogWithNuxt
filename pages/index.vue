@@ -1,6 +1,5 @@
 <template>
   <div class="home-page">
-    <Loader :isLoading="isLoading" />
     <section class="intro">
       <h1>Get the latest tech news</h1>
     </section>
@@ -17,31 +16,9 @@ export default {
     Loader,
     PostList
   },
-  asyncData(context, callback) {
-    setTimeout(()=>{
-      callback(null, {
-        isLoading: false,
-        loadedPosts: [
-          {
-            id: '1',
-            title: 'First Post',
-            previewText: "This is our first post!",
-            thumbnail: "https://nuxtjs.org/nuxt-views-schema.png"
-          },
-          {
-            id: '2',
-            title: 'Seconed Post',
-            previewText: "This is our first post!",
-            thumbnail: "https://nuxtjs.org/nuxt-views-schema.png"
-          }
-        ]
-      })
-    }, 1000)
-  },
-  data() {
-    return {
-      loadedPosts: [],
-      isLoading: true
+  computed: {
+    loadedPosts () {
+      return this.$store.getters.loadedPosts
     }
   }
 }
