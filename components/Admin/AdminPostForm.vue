@@ -1,12 +1,15 @@
 <template>
     <section class="new-post-form">
             <form @submit.prevent="onSave">
-                <AppControlInput v-model="editedPost.author">Author Name</AppControlInput>
-                <AppControlInput v-model="editedPost.title">Title</AppControlInput>
-                <AppControlInput v-model="editedPost.thumbnailLink">Thumbnail Link</AppControlInput>                      
+                <AppControlInput v-model="post.author">Author</AppControlInput>
+                <AppControlInput v-model="post.title">Title</AppControlInput>
+                <AppControlInput v-model="post.thumbnailLink">Thumbnail Link</AppControlInput>                      
                 <AppControlInput
                             control-type="textarea"
-                            v-model="editedPost.content">Content</AppControlInput>                     
+                            v-model="post.content">Content</AppControlInput>
+                <AppControlInput
+                            control-type="textarea"
+                            v-model="post.previewText">Preview Text</AppControlInput>                    
                 <AppButton type="submit">Save</AppButton>                    
                 <AppButton
                             type="button"
@@ -30,18 +33,6 @@ export default {
         post: {
             type: Object,
             required: false
-        }
-    },
-    data() {
-        return {
-            editedPost: this.post
-             ? { ...this.post }
-             : {
-                author: '',
-                title: '',
-                content: '',
-                thumbnailLink: ''
-               }
         }
     },
     methods: {

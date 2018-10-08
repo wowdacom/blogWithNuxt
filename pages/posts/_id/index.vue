@@ -14,21 +14,18 @@
     </div>
 </template>
 <script>
+import axios from 'axios'
+
 export default {
-  asyncData(context, callback) {
-    setTimeout(() => {
-      callback(null, {
-        LoadedPost: {
-            id: context.route.params.id,
-            title: `First Post (ID: ${context.route.params.id} )`,
-            previewText: "This is our first post!",
-            author: 'Jim Hu',
-            updatedDate: new Date(),
-            content: 'Some ',
-            thumbnail: "https://nuxtjs.org/nuxt-views-schema.png"
-        }
-      })
-    }, 1000);
+  asyncData({ params }, callback) {
+        let LoadedPost = {}
+        console.log(params)
+        const url = `https://nuxt-blog-52d1f.firebaseio.com/posts/${params.id}.json`
+        return axios.get(url)
+          .then((res) => {
+              callback(null, { LoadedPost: { ...res.data } })
+          })
+          .catch( e => console.log(e))
   }
 }
 </script>

@@ -20,12 +20,6 @@ export default {
   components: {
     PostList
   },
-  // asyncData (context) {
-  //   return axios.get(`https://jsonplaceholder.typicode.com/todos/1`)
-  //   .then((res) => {
-  //     return { title: res.data.title }
-  //   })
-  // }
   computed: {
     loadedPosts () {
       return this.$store.getters.loadedPosts
