@@ -7,7 +7,7 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    title: 'My Awsome Blog',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -23,6 +23,10 @@ module.exports = {
   ** Customize the progress-bar color
   */
   loading: { color: '#FFFFFF' },
+  loadingIndicator: {
+    name: "circle",
+    color: "#fa023f"
+  },
 
   /*
   ** Global CSS
@@ -35,6 +39,8 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~plugins/core-components.js',
+    '~plugins/data-filter.js'
   ],
 
   /*
@@ -60,6 +66,21 @@ module.exports = {
     */
     extend(config, ctx) {
       
+    }
+  },
+  env: {
+    baseUrl: process.env.BASE_URL || 'https://nuxt-blog-52d1f.firebaseio.com'
+  },
+  transition: {
+    name: 'fade',
+    mode: 'out-in'
+  },
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        path: '*',
+        component: resolve(__dirname, 'pages/index.vue')
+      })
     }
   }
 }

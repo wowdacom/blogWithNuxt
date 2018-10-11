@@ -37,8 +37,16 @@ export default {
     },
     methods: {
         onSave() {
+            let editedPost = {}
+            editedPost = this.post ? { ...this.post } : {
+                    author: "",
+                    title: "",
+                    thumbnailLink: "",
+                    content: "",
+                    previewText: ""
+                }
             // Save the post
-            this.$emit('submit', this.editedPost)
+            this.$emit('submit', editedPost)
         },
         onCancel() {
             // Navigate back

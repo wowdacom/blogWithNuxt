@@ -8,13 +8,11 @@
 </template>
 
 <script>
-import PostList from '~/components/Posts/PostList.vue'
 import Loader from '~/components/UI/Loader'
 
 export default {
   components: {
-    Loader,
-    PostList
+    Loader
   },
   computed: {
     loadedPosts () {

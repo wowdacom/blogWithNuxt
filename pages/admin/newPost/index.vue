@@ -1,6 +1,6 @@
 <template>
     <div class="admin-new-post-page">
-        <AdminPostForm @submit="onSubmitted" />
+        <AdminPostForm :post="post" @submit="onSubmitted" />
     </div>
 </template>
 
@@ -14,11 +14,24 @@ export default {
     components: {
         AdminPostForm
     },
+    data() {
+        return {
+            post: {
+                    author: "",
+                    title: "",
+                    thumbnailLink: "",
+                    content: "",
+                    previewText: ""
+                }
+        }
+    },
     methods: {
         onSubmitted(postData) {
-            axios.post('https://nuxt-blog-52d1f.firebaseio.com/posts.json', postData)
-            .then(result => console.log(result))
-            .catch(e => console.log(e))
+            this.$store.dispatch('addPost', postData)
+                .then((res)=>{
+                    //console.log(res)
+                    this.$router.push("/admin")
+                })
         }
     }
 }
