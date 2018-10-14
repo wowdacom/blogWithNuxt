@@ -1,5 +1,4 @@
 import Vuex from 'vuex'
-import axios from 'axios'
 
 const createStore = () => {
     return new Vuex.Store({
@@ -20,11 +19,12 @@ const createStore = () => {
         },
         actions: {
             nuxtServerInit(vuexContext, context) {
-                return axios.get('https://nuxt-blog-52d1f.firebaseio.com/posts.json')
-                    .then(res => {
+                return context.app.$axios
+                    .$get('/posts.json')
+                    .then(data => {
                         const postsArray = []
-                        for (const key in res.data) {
-                            postsArray.push({ ...res.data[key], id: key }, )
+                        for (const key in data) {
+                            postsArray.push({ ...data[key], id: key })
                         }
                         vuexContext.commit('setPosts', postsArray)
                     })
@@ -35,15 +35,17 @@ const createStore = () => {
                     ...post,
                     updateDate: new Date()
                 }
-                return axios.post('https://nuxt-blog-52d1f.firebaseio.com/posts.json', createPost)
-                .then(result => {
-                    vuexContext.commit('addPost', { ...createPost, id: result.data.name })
+                return this.$axios
+                .$post('/posts.json', createPost)
+                .then(data => {
+                    vuexContext.commit('addPost', { ...createPost, id: data.name })
                 })
                 .catch(e => console.log(e))
             },
             editedPost(vuexContext, editedPost) {
-                const url = `https://nuxt-blog-52d1f.firebaseio.com/posts/${editedPost.id}.json`
-                return axios.put(url, editedPost)
+                const url = `/posts/${editedPost.id}.json`
+                return this.$axios
+                    .$put(url, editedPost)
                     .then((res)=>{
                         vuexContext.commit('editPost', editedPost)
                     })

@@ -14,16 +14,17 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
 
 export default {
-  asyncData({ params }, callback) {
+  asyncData(context) {
         let LoadedPost = {}
-        const url = `https://nuxt-blog-52d1f.firebaseio.com/posts/${params.id}.json`
-        return axios.get(url)
-          .then((res) => {
-              console.log(res.data)
-              callback(null, { LoadedPost: { ...res.data } })
+        const url = `/posts/${context.params.id}.json`
+        return context.app.$axios
+          .$get(url)
+          .then((data) => {
+              return {
+                LoadedPost: data
+              }
           })
           .catch( e => console.log(e))
   }

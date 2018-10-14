@@ -7,6 +7,7 @@
 
 
 export default {
+  middleware: 'log',
   components: {
     PostPreview
   }
@@ -14,7 +15,6 @@ export default {
 </script>
 <script>
 import PostList from '~/components/Posts/PostList.vue'
-import axios from 'axios'
 
 export default {
   components: {
